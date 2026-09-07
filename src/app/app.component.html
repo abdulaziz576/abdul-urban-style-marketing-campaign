@@ -1,0 +1,70 @@
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">Y</span>
+    <div>
+      <h1>{{ storeName }}</h1>
+      <p>Simple finds for everyday life</p>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <label class="search-box">
+      <span>⌕</span>
+      <input type="search" [(ngModel)]="searchTerm" placeholder="Search products..." aria-label="Search products" />
+    </label>
+    <button class="cart-btn" type="button">Cart <span>{{ cartCount }}</span></button>
+  </div>
+</header>
+
+<main class="page-shell">
+  <aside class="sidebar">
+    <h2>Categories</h2>
+    <button
+      *ngFor="let category of categories"
+      type="button"
+      class="category-btn"
+      [class.active]="selectedCategory === category"
+      (click)="chooseCategory(category)">
+      {{ category }}
+    </button>
+  </aside>
+
+  <section class="catalog">
+    <div class="catalog-heading">
+      <div>
+        <p class="eyebrow">Browse collection</p>
+        <h2>{{ selectedCategory }}</h2>
+      </div>
+      <p>{{ filteredProducts.length }} product{{ filteredProducts.length === 1 ? '' : 's' }} found</p>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredProducts.length === 0">
+      <h3>No products matched your search.</h3>
+      <p>Try another keyword or choose a different category.</p>
+    </div>
+
+    <div class="product-grid">
+      <article class="product-card" *ngFor="let product of filteredProducts">
+        <div class="image-wrap">
+          <img [src]="product.imageUrl" [alt]="product.name" />
+          <span class="stock-badge" [class.out]="!product.inStock">
+            {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+          </span>
+        </div>
+
+        <div class="card-body">
+          <p class="category-label">{{ product.category }}</p>
+          <h3>{{ product.name }}</h3>
+          <p class="description">{{ product.description }}</p>
+
+          <div class="card-footer">
+            <strong>{{ product.price | currency:'CAD':'symbol':'1.2-2' }}</strong>
+            <button type="button" [disabled]="!product.inStock" (click)="addToCart(product)">
+              {{ product.inStock ? 'Add to Cart' : 'Unavailable' }}
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>

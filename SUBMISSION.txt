@@ -1,0 +1,7 @@
+Angular Ecommerce Project - Final Submission
+
+GitHub Repository URL:
+https://github.com/YOUR-USERNAME/yashal-angular-ecommerce
+
+Vercel Application URL:
+https://YOUR-PROJECT.vercel.app
